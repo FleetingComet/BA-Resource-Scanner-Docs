@@ -1,0 +1,73 @@
+---
+title: Screen Navigation
+description: Quick start guide for editing screen_config.json and understanding how the scanner visits pages.
+sidebar:
+  order: 6
+---
+
+import { Aside, Steps, Code } from '@astrojs/starlight/components';
+
+export const exampleCode = `{
+  "Currencies": {
+    "menu_location": "currencies",
+    "grid_type": "currencies",
+    "uses_menu_tab": false,
+    "enabled": true
+  }
+}`;
+
+Short, practical guide so you can edit `config/screen_config.json` and understand how the scanner visits pages.
+
+## What This File Does
+
+`config/screen_config.json` defines which in-game screens the scanner visits, how to reach them, and whether to run extraction routines. The `launch.py` wizard manages the `enabled` flags automatically, but you can edit other fields manually if needed.
+
+## Minimal Example
+
+<Code code={exampleCode} lang="json" title="screen_config.json" />
+
+## Key Fields
+
+| Field | Description |
+|---|---|
+| `menu_location` | Which UI control to tap. Must match a selector in `ScreenNavigator.determine_button()`. |
+| `grid_type` | Logical type passed to processors: `Equipment`, `Items`, `Students`, `Student`, `currencies`. |
+| `uses_menu_tab` | `true` if reached via the in-game menu tab; `false` if reached from Home. |
+| `enabled` | Set to `false` to skip the screen during scans. |
+
+## How It Works
+
+<Steps>
+
+1. On startup, `ScreenState` loads all enabled screens.
+
+2. The navigator ensures the correct UI state (Home or Menu Tab).
+
+3. It taps `menu_location` and verifies arrival.
+
+4. The appropriate processor runs:
+   - `Currencies` → reads AP / Credits / Pyroxene
+   - `Equipment` / `Items` → grid scanning via `startMatching`
+   - `Students` → taps first student → chains to `Student` detail scanning
+
+</Steps>
+
+## Tuning Timing & Reliability
+
+Adjust delays in `config/settings.json` (or via `python launch.py -e`):
+
+| Setting | Effect |
+|---|---|
+| `wait_multiplier` | Short action sleeps |
+| `wait_screen_nav_multiplier` | Page load & transition sleeps |
+
+<Aside type="tip">
+  If navigation misses screens, increase `wait_screen_nav_multiplier` first. If captures lag, increase `capture_interval`.
+</Aside>
+
+## Troubleshooting
+
+| Problem | Solution |
+|---|---|
+| **Never reaches a screen** | Verify `menu_location` exists in `ScreenNavigator.determine_button()`. Check logs for OCR title mismatches. |
+| **False positives on screen detection** | Increase `wait_screen_nav_multiplier` to allow full UI renders before OCR runs. |

@@ -1,0 +1,86 @@
+---
+title: Contributing
+description: How to contribute to the Blue Archive Resources Scanner project.
+sidebar:
+  order: 7
+---
+
+import { Steps, Aside, Card, CardGrid } from '@astrojs/starlight/components';
+
+Interested in contributing? Check out the [open issues](https://github.com/FleetingComet/BA-Scanner/issues) to see where you can help.
+
+## Getting Started
+
+<CardGrid>
+  <Card title="Development Tools" icon="laptop">
+    [VSCode](https://code.visualstudio.com/) or another code editor of your choice.
+  </Card>
+  <Card title="Testing Setup" icon="setting">
+    A working emulator or Android device to test your changes.
+  </Card>
+</CardGrid>
+
+<Aside type="tip">
+  A basic understanding of Python is recommended. If you're new to Python, check out the [Python Beginner's Guide](https://wiki.python.org/moin/BeginnersGuide).
+</Aside>
+
+## Steps to Contribute
+
+<Steps>
+
+1. **Fork and Clone** - Fork the repository and clone it to your local machine.
+
+2. **Open the Project** - Load the project in VSCode or your preferred editor.
+
+3. **Create a Branch** - If working on a specific issue, create a new branch for your changes. Use the issue name for better organization:
+
+   ```bash
+   git checkout -b issue-name
+   ```
+
+4. **Make Your Changes** - Implement your fixes or features.
+
+5. **Commit and Push** - Commit your changes with a descriptive message, then push your branch to your fork.
+
+6. **Create a Pull Request** - Open a pull request against the main repository and describe your changes.
+
+</Steps>
+
+## Project Structure
+
+import { FileTree } from '@astrojs/starlight/components';
+
+<FileTree>
+
+- Blue-Archive-Scanner/
+  - assets/ Reference images & processed game data
+  - config/ Auto-generated configs
+    - settings.json Launcher saves ADB, multipliers, sync prefs here
+    - screen_config.json Enabled screens & grid coordinates
+  - logs/ Runtime & Scanner logs
+  - output/ Scan results & Justin Planner exports
+  - utils/ Core modules
+    - ocr/
+      - engine.py RapidOCR lazy-initialized wrapper
+      - extract.py Region routing & extraction
+      - preprocessor.py Image cleanup (color filters, binarization)
+      - matchers.py Template matching (stars, gear tiers)
+    - device/ ADB & Desktop capture/input abstractions
+    - data/ Processors, JSON mapping, sync utilities
+  - locations/ Coordinates, regions & search patterns
+  - requirements.txt
+  - config.py Loads settings.json, defines paths/models
+  - main.py CLI entry point (supports --offline)
+  - launch.py Interactive setup wizard
+
+</FileTree>
+
+## Handling Locations and Regions
+
+For more details on managing location and region coordinates, refer to the [FGA Contributing Guide](https://github.com/Fate-Grand-Automata/FGA/blob/master/CONTRIBUTING.md).
+
+<Aside>
+  1440p or any other resolution is not supported yet, so the step doubling coordinate values is unnecessary for now.
+</Aside>
+
+For developer-specific screen navigation details, see the [Screen Navigation Reference](/dev/screen-navigation-reference/).

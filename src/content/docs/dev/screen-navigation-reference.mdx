@@ -1,0 +1,86 @@
+---
+title: Screen Navigation Reference
+description: Developer reference for ScreenNavigator and ScreenState - configuration, runtime behavior, and timing controls.
+sidebar:
+  label: Screen Navigation Reference
+  order: 1
+  badge:
+    text: Dev
+    variant: caution
+---
+
+import { Aside, Steps, FileTree } from '@astrojs/starlight/components';
+
+Explains configuration structure, runtime behavior, and timing controls for `ScreenNavigator` and `ScreenState`.
+
+## Configuration
+
+`config/screen_config.json` defines page targets. Loaded by `ScreenState` at startup. Only `enabled: true` screens are processed.
+
+### Descriptor Fields
+
+| Field | Description |
+|---|---|
+| `menu_location` | String identifier mapped to `ScreenNavigator.determine_button()`. |
+| `grid_type` | Category passed to matching routines: `Equipment`, `Items`, `Students`, `Student`, `currencies`. |
+| `uses_menu_tab` | `true` → opens menu tab first. `false` → navigates from Home. |
+| `enabled` | Toggles screen participation. |
+
+## Runtime Behavior (`ScreenState`)
+
+<Steps>
+
+1. Loads enabled screens into `screen_mapping`.
+
+2. Checks current page via `navigator.identify_screen()`.
+
+3. Ensures correct UI state via `ensure_at_home()` or `ensure_menu_state()`.
+
+4. Calls `navigate_to_target()` and verifies the result.
+
+5. Executes the appropriate processor:
+   - `Currencies` → `get_currencies()`
+   - `Equipment` / `Items` → `startMatching(...)`
+   - `Students` → chains to `Student` → `get_student_info()`
+
+6. Tracks `visited` / `unvisited` sets until all screens are complete.
+
+</Steps>
+
+## Timing & Tuning
+
+Delays are scaled by values in `config/settings.json`:
+
+| Setting | Default | Purpose |
+|---|---|---|
+| `wait_multiplier` | `1.0` | Base action delay |
+| `wait_screen_nav_multiplier` | `2.0` | Screen transition delay |
+| `capture_interval` | `0.5` | Background screenshot thread frequency |
+
+<Aside type="tip">
+  Keep `wait_multiplier` low for responsiveness. Raise `wait_screen_nav_multiplier` if page loads are inconsistent.
+</Aside>
+
+## Troubleshooting
+
+| Problem | Solution |
+|---|---|
+| **Screen never detected** | Verify `menu_location` exists in `determine_button()`. Check OCR title output in logs. |
+| **Swipe/Navigation desync** | Increase `wait_screen_nav_multiplier`. Ensure `1280×720` resolution with no scaling. |
+
+## Adding a New Screen
+
+<Steps>
+
+1. Add an entry to `screen_config.json`.
+
+2. Add a `menu_location` mapping in `ScreenNavigator.determine_button()`.
+
+3. If introducing a new `grid_type`, add a processing call in `ScreenState._execute_process()`.
+
+4. Test with:
+   ```bash
+   python launch.py
+   ```
+
+</Steps>

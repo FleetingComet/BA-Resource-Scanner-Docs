@@ -1,0 +1,45 @@
+---
+title: How the Scanner Works
+description: Technical overview of the scanning pipeline - image capture, OCR, and data normalization.
+sidebar:
+  order: 8
+---
+
+import { Aside, Steps } from '@astrojs/starlight/components';
+
+## Searching for Images
+
+When the app captures a screenshot, the following pipeline runs:
+
+<Steps>
+
+1. **Capture** - A screenshot is taken at the device's native resolution (currently hardcoded for `1280×720`).
+
+2. **Region Extraction** - The image is cropped to predefined regions (`locations/search.py`) based on the target element (name, count, skill level, etc.).
+
+3. **Preprocessing** - Color filtering isolates specific UI elements (e.g., removing backgrounds for `ue_star`, retaining heart colors for `number_in_circle`). Images are converted to binary/grayscale and scaled if too small.
+
+4. **Element-Specific Processing** - The cropped image is processed differently depending on the type of element being detected:
+
+   | Element | Processing |
+   |---|---|
+   | `gear` | Converted to grayscale and matched against known gear tier image patterns |
+   | `star` | Analyzed to detect star shapes indicating rarity or rating |
+   | `ue_star` | Background colors removed to isolate blue stars; matched via blue star detection |
+   | `ue_level` | Non-white colors removed to isolate level numbers for easier OCR |
+   | `number_in_circle` | Only color `#3c4e66` is retained to extract numbers inside colored circles |
+   | Other | Pre-processed contextually |
+
+5. **Text Extraction** - The processed crop is passed to **RapidOCR** (`utils/ocr/engine.py`). The engine runs inference directly on the NumPy array and returns extracted text without requiring external binaries or config flags.
+
+6. **Normalization & Matching** - Extracted text is cleaned (`utils/ocr/text_util.py`), normalized (e.g., `"Lv.8"` → `8`, `"MAX"` → `5` or `10`), and fuzzy-matched against local asset databases to map in-game items to your inventory.
+
+</Steps>
+
+## Handling Locations and Regions
+
+For details on managing location and region coordinates, refer to the [FGA Contributing Guide](https://github.com/Fate-Grand-Automata/FGA/blob/master/CONTRIBUTING.md).
+
+<Aside>
+  1440p and other resolutions are not supported yet - the step doubling coordinate values is unnecessary for now.
+</Aside>
