@@ -6,6 +6,9 @@ import tailwindcss from "@tailwindcss/vite";
 
 // https://astro.build/config
 export default defineConfig({
+  site: 'https://fleetingcomet.github.io',
+  base: '/BA-Resource-Scanner-Docs',
+
   experimental: {
     contentIntellisense: true,
   },
