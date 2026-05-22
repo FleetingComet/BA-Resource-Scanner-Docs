@@ -2,8 +2,14 @@
 import { defineConfig } from "astro/config";
 import starlight from "@astrojs/starlight";
 
+import tailwindcss from "@tailwindcss/vite";
+
 // https://astro.build/config
 export default defineConfig({
+  experimental: {
+    contentIntellisense: true,
+  },
+
   integrations: [
     starlight({
       title: "Blue Archive Resources Scanner Docs",
@@ -24,6 +30,9 @@ export default defineConfig({
       // editLink: {
       //   baseUrl: "https://github.com/FleetingComet/BA-Scanner/edit/main/docs/",
       // },
+      customCss: [
+        './src/styles/global.css',
+      ],
       lastUpdated: true,
       sidebar: [
         { label: "Home", link: "/" },
@@ -58,4 +67,8 @@ export default defineConfig({
       ],
     }),
   ],
+
+  vite: {
+    plugins: [tailwindcss()],
+  },
 });
