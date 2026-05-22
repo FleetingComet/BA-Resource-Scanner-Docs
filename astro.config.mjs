@@ -39,7 +39,7 @@ export default defineConfig({
           //     },
           //     { label: "Screen Navigation", slug: "guides/screen-navigation" },
           //   ],
-          autogenerate: { directory: "guides" },
+          items: [{ autogenerate: { directory: "guides" } }],
         },
         { label: "How It Works", slug: "how-it-works" },
         { label: "Roadmap", slug: "roadmap" },
@@ -47,13 +47,13 @@ export default defineConfig({
         {
           label: "Developer Reference",
           badge: { text: "Dev", variant: "caution" },
-        //   items: [
-        //     {
-        //       label: "Screen Navigation Reference",
-        //       slug: "dev/screen-navigation-reference",
-        //     },
-        //   ],
-          autogenerate: { directory: "dev" },
+          //   items: [
+          //     {
+          //       label: "Screen Navigation Reference",
+          //       slug: "dev/screen-navigation-reference",
+          //     },
+          //   ],
+          items: [{ autogenerate: { directory: "dev" } }],
         },
       ],
     }),
