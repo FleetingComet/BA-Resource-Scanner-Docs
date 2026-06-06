@@ -23,27 +23,48 @@ Before you begin, make sure you have the following:
 
 <Steps>
 
-1. **Clone the repository:**
+1. **Get the project files:**
 
-   ```bash
-   git clone https://github.com/FleetingComet/BA-Scanner.git
-   cd BA-Scanner
-   ```
+    <Tabs>
+     <TabItem label="Option A - Clone with Git">
+       ```bash
+       git clone https://github.com/FleetingComet/Blue-Archive-Resource-Scanner.git
+       ```
+       ```bash
+       cd Blue-Archive-Resource-Scanner
+       ```
+     </TabItem>
+     <TabItem label="Option B - Download ZIP">
+       1. Go to the repository page:
+          [https://github.com/FleetingComet/Blue-Archive-Resource-Scanner](https://github.com/FleetingComet/Blue-Archive-Resource-Scanner)
+       2. Click **Code -> Download ZIP**
+       3. Extract the ZIP file to a folder
+       4. Open a terminal inside the extracted folder
+     </TabItem>
+   </Tabs>
+
 
 2. **Create and activate a virtual environment:**
 
-   <Tabs>
+   <Tabs syncKey="package-manager">
      <TabItem label="uv (recommended)">
        ```bash
        uv venv --python 3.13.0
        ```
        Then activate it:
-       ```bash
-       # Windows
-       .venv\Scripts\activate
-       # macOS / Linux
-       source .venv/bin/activate
-       ```
+       <Tabs syncKey="operating-system">
+         <TabItem label="Windows">
+           ```bash
+           .venv\Scripts\activate
+           ```
+         </TabItem>
+         <TabItem label="macOS / Linux">
+           ```bash
+           source .venv/bin/activate
+           ```
+         </TabItem>
+       </Tabs>
+
      </TabItem>
      <TabItem label="pip / venv">
        ```bash
@@ -58,13 +79,13 @@ Before you begin, make sure you have the following:
 
 3. **Install dependencies:**
 
-   <Tabs>
-     <TabItem label="uv">
+   <Tabs syncKey="package-manager">
+     <TabItem label="uv (recommended)">
        ```bash
        uv pip install -r requirements.txt
        ```
      </TabItem>
-     <TabItem label="pip">
+     <TabItem label="pip / venv">
        ```bash
        pip install -r requirements.txt
        ```
