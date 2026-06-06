@@ -1,16 +1,35 @@
 ---
 title: Blue Archive Resources Scanner
 description: A Python-based tool to scan and count owned resources in Blue Archive.
+template: splash
 sidebar:
   order: 1
+hero:
+  title: "Blue Archive Resources Scanner"
+  tagline: A Python-based tool to scan and count owned resources in Blue Archive.
+  image:
+    alt: A “BA” logo with a “Scanner” subtitle, featuring a halo on the “A” logo.
+    dark: ../../assets/images/BA-Scanner-logo-dark.png
+    light: ../../assets/images/BA-Scanner-logo-light.png
+  actions:
+    - text: Tell me more
+      link: guides/installation/
+      icon: right-arrow
+    - text: View on GitHub
+      link: https://github.com/FleetingComet/BA-Scanner
+      icon: external
+      variant: minimal
+      attrs:
+        rel: me
 ---
 
-import { Card, CardGrid, Aside, Badge, LinkCard } from '@astrojs/starlight/components';
+import { Card, CardGrid, Aside, Badge } from "@astrojs/starlight/components";
+import { default as LinkCard } from "@/components/LinkCard.astro";
 
-A Python-based tool to scan and count owned resources in **Blue Archive**.
+{/* A Python-based tool to scan and count owned resources in **Blue Archive**. */}
 
 <Aside type="caution">
-  **Resolution**: Only supports **1280×720** resolution at this time.
+  **Resolution**: Only supports **1280x720** resolution at this time.
 </Aside>
 
 ## Features
@@ -23,7 +42,8 @@ A Python-based tool to scan and count owned resources in **Blue Archive**.
     Extract levels, skill tiers, gear, UE stars, and bond levels.
   </Card>
   <Card title="No External Binaries" icon="approve-check">
-    Uses RapidOCR - a lightweight ONNX engine that runs entirely in Python. No Tesseract needed.
+    Uses RapidOCR - a lightweight ONNX engine that runs entirely in Python. No
+    Tesseract needed.
   </Card>
   <Card title="Data Sync" icon="down-caret">
     Optional online sync keeps your game asset data up to date automatically.
@@ -33,11 +53,11 @@ A Python-based tool to scan and count owned resources in **Blue Archive**.
 ## Quick Links
 
 <CardGrid>
-  <LinkCard
+  {/* <LinkCard
     title="Installation"
     description="Get up and running in minutes."
     href="/guides/installation/"
-  />
+  /> */}
   <LinkCard
     title="Usage"
     description="Learn how to run the scanner."
@@ -47,6 +67,11 @@ A Python-based tool to scan and count owned resources in **Blue Archive**.
     title="Configure Emulator"
     description="Set up your Android emulator correctly."
     href="/guides/configure-emulator/"
+  />
+  <LinkCard
+    title="Roadmap"
+    description="Overview of upcoming features, improvements, and the project's development direction."
+    href="/roadmap/"
   />
   <LinkCard
     title="Contributing"

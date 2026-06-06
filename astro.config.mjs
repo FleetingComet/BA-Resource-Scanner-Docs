@@ -6,8 +6,8 @@ import tailwindcss from "@tailwindcss/vite";
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://fleetingcomet.github.io',
-  base: '/BA-Resource-Scanner-Docs',
+  site: "https://fleetingcomet.github.io",
+  base: "/BA-Resource-Scanner-Docs",
 
   experimental: {
     contentIntellisense: true,
@@ -19,8 +19,8 @@ export default defineConfig({
       description:
         "A Python-based tool to scan and count owned resources in Blue Archive.",
       logo: {
-        dark: "./src/assets/images/BA-Scanner_symbolon.png",
-        light: "./src/assets/images/BA-Scanner_symbolon_transparent.png",
+        dark: "./src/assets/images/BA-Scanner-logo-dark.png",
+        light: "./src/assets/images/BA-Scanner-logo-light.png",
         replacesTitle: false,
       },
       social: [
@@ -33,9 +33,7 @@ export default defineConfig({
       // editLink: {
       //   baseUrl: "https://github.com/FleetingComet/BA-Scanner/edit/main/docs/",
       // },
-      customCss: [
-        './src/styles/global.css',
-      ],
+      customCss: ["./src/styles/global.css"],
       lastUpdated: true,
       sidebar: [
         { label: "Home", link: "/" },
